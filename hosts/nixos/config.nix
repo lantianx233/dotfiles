@@ -13,8 +13,7 @@
   ...
 }: let
   inherit (import ./variables.nix) keyboardLayout;
-in {
-  imports = [
+  candidates = [
     ./hardware.nix
     ./users.nix
     ./packages-fonts.nix
@@ -26,6 +25,8 @@ in {
     ../../modules/vm-guest-services.nix
     ../../modules/local-hardware-clock.nix
   ];
+in {
+  imports = lib.filter builtins.pathExists candidates;
 
   # BOOT related stuff
   boot = {
